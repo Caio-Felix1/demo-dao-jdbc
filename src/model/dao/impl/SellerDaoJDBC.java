@@ -54,17 +54,9 @@ public class SellerDaoJDBC implements SellerDao {
 			
 			// transformando a tabela em objetos associados:
 			if (rs.next()) {
-				Department dep = new Department(
-						rs.getInt("DepartmentId"),
-						rs.getString("DepName"));
+				Department dep = instantiateDepartment(rs);
 
-				Seller seller = new Seller(
-						rs.getInt("Id"),
-						rs.getString("Name"),
-						rs.getString("Email"),
-						rs.getDate("BirthDate"),
-						rs.getDouble("BaseSalary"),
-						dep);
+				Seller seller = instantiateSeller(rs, dep);
 				
 				return seller;
 			}
@@ -77,6 +69,22 @@ public class SellerDaoJDBC implements SellerDao {
 			DB.closeResultSet(rs);
 			DB.closeStatement(st);
 		}
+	}
+
+	private Seller instantiateSeller(ResultSet rs, Department dep) throws SQLException {
+		return new Seller(
+				rs.getInt("Id"),
+				rs.getString("Name"),
+				rs.getString("Email"),
+				rs.getDate("BirthDate"),
+				rs.getDouble("BaseSalary"),
+				dep);
+	}
+
+	private Department instantiateDepartment(ResultSet rs) throws SQLException {
+		return new Department(
+				rs.getInt("DepartmentId"),
+				rs.getString("DepName"));
 	}
 
 	@Override
