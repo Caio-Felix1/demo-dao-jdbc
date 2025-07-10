@@ -44,6 +44,11 @@ public class Program2 {
 		
 		System.out.println("Delete completed");
 		
+		System.out.println("\n=== TEST 6: Department findByName ===");
+		list = departmentDao.findByName("Toys");
+		
+		list.forEach(System.out::println);
+		
 		sc.close();
 	}
 
